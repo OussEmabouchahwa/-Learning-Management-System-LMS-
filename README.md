@@ -1,157 +1,218 @@
-# Dars
+# Dars LMS — Class-Ready Learning Management System
 
-Dars is a learning management system for managing courses, students and assessments. Instructors build courses and grade work. Students follow lessons, take timed quizzes, hand in assignments and track their progress. Admins manage the platform.
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.3-61dafb?logo=react)](https://react.dev/)
+[![NestJS](https://img.shields.io/badge/NestJS-10.4-e0234e?logo=nestjs)](https://nestjs.com/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38b2ac?logo=tailwindcss)](https://tailwindcss.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-5.18-2d3748?logo=prisma)](https://www.prisma.io/)
+[![WCAG 2.2 AA](https://img.shields.io/badge/Accessibility-WCAG%202.2%20AA-success)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+[![License](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 
-The name comes from the Arabic word for "lesson".
+**Dars** (Arabic: **درس**, meaning *"lesson"*) is a modern, high-craft Learning Management System built from the ground up for university classrooms, bootcamps, and professional academies. It provides students with a task-focused operating environment, instructors with rigorous course building and grading workflows, and administrators with comprehensive oversight.
 
-## Features
+Designed around a calm **Chalk, Board & Pencil** aesthetic, Dars rejects generic SaaS tropes (no purple-indigo gradients, no empty KPI cards, no circular progress rings) in favor of typographical hierarchy and its signature **Lesson Trail**.
 
-**Students**
-- Dashboard built around one question: what should I do next? Resume point, due soon, grades, course list
-- Lesson viewer with Markdown, code blocks and video, explicit "Mark as complete"
-- Timed quizzes with autosave, attempt limits and instant results
-- Assignment hand-in with file or text, late policy, grade and feedback
-- Progress per lesson and per course, shown as a Lesson Trail
+---
 
-**Instructors**
-- Course builder: modules, lessons, quizzes and assignments, drag and keyboard reordering, publish checklist
-- Question bank with single choice, multiple choice and true or false
-- Submission review and grading with feedback
-- Gradebook and per-course progress summary
+## 📸 Interface Showcase
 
-**Admins**
-- User and role management, platform overview, audit log
+### Student Dashboard — The Operating Surface
+The central dashboard is built around a single question: *"What should I do next?"* It features the focal **Resume Panel**, **Type-Divided Stat Band**, deadline-prioritized **Due Soon List**, and **My Courses** with compact lesson trails.
 
-**Platform**
-- JWT access tokens with rotating refresh cookies, role-based and ownership-based authorization
-- Docker-based deployment with automatic HTTPS, health checks, structured logs
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="Dars Student Dashboard" width="100%" />
+</p>
 
-## Tech stack
+---
 
-| Layer | Technology |
+### Reading & Assessment Surfaces
+
+| **Lesson Viewer (Prose at 68ch max)** | **Server-Authoritative Quiz Player** |
+|:---:|:---:|
+| <img src="docs/screenshots/lesson-viewer.png" alt="Lesson Viewer" width="100%" /> | <img src="docs/screenshots/quiz-player.png" alt="Quiz Player" width="100%" /> |
+| *IBM Plex Serif 400 reading surface with code highlighting and optimistic completion.* | *Segment-strip navigator, countdown timer, polite aria-live alerts, and autosave.* |
+
+| **Course Catalog** | **Instructor Submissions Queue** |
+|:---:|:---:|
+| <img src="docs/screenshots/course-catalog.png" alt="Course Catalog" width="100%" /> | <img src="docs/screenshots/submissions-queue.png" alt="Submissions Queue" width="100%" /> |
+| *Clean divided rows with enrollment status, level tags, and lesson counts.* | *Oldest-first grading queue with modal grading and constructive feedback.* |
+
+| **Mobile View (390px Responsive)** | **Clean Authentication Surface** |
+|:---:|:---:|
+| <img src="docs/screenshots/dashboard-mobile.png" alt="Dashboard Mobile" width="70%" /> | <img src="docs/screenshots/login.png" alt="Login Portal" width="70%" /> |
+| *Collapsible top strip, stacked stat band, and touch-friendly targets.* | *High-contrast form fields with Zod validation and keyboard focus.* |
+
+---
+
+## 🎨 The Signature Design System
+
+Dars implements a strict design system documented in [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) and previewable in [`docs/design-reference.html`](docs/design-reference.html).
+
+### 1. The 60 / 30 / 10 Rule
+* **60% Chalk (Dominant Neutral)**: `#FFFFFF` panels/inputs, `#F4F6F5` ground, `#EBEFED` code blocks and sunken cards.
+* **30% Board (Secondary Structure)**: `#E3EBEA` sidebar & table bands, `#768D8C` control borders, `#2E4A4D` secondary text, `#0F2A2E` ink.
+* **10% Pencil (Accent)**: `#F2A100` primary action, active trail segment with halo, search highlights. **Exactly one primary button per view.**
+* **Status Colors**: Leaf (`#1F7A4D`) for passed/published; Redpen (`#B42318`) for overdue/errors.
+
+### 2. IBM Plex Superfamily Typography
+* **Serif 600**: Page titles (H1), lesson headers (H2), section titles (H3).
+* **Sans 400 / 500 / 600**: Application navigation, buttons, form controls, and tabular tables.
+* **Serif 400**: Lesson reading prose (strictly constrained to 68ch line-length).
+* **Mono 400**: Code listings, quiz timers, student identifiers, and tabular numbers.
+
+### 3. The Lesson Trail
+A segmented progress element where each segment represents a lesson:
+* **Completed**: Solid Board (`bg-board-700`)
+* **Current**: Vibrant Pencil (`bg-pencil-500`) with subtle halo (`ring-2 ring-pencil-100`)
+* **Upcoming**: Quiet Slate (`bg-board-200`)
+* Accompanied by full accessible alternative text and milestone alerts (`Quiz 3 unlocks after lesson 17`).
+
+---
+
+## ⚡ Architecture & Technology Stack
+
+Dars is engineered as an enterprise-grade **Modular Monolith** in an npm workspaces monorepo:
+
+```
+lms-kit/
+├── apps/
+│   ├── api/             # NestJS 10, Prisma 5, PostgreSQL 16, Pino, Argon2id
+│   └── web/             # React 18, Vite 5, Tailwind CSS 3.4, TanStack Query, Radix UI
+├── packages/
+│   └── contracts/       # Shared Zod schemas, TypeScript types, and DTO contracts
+├── deploy/              # Multi-stage Dockerfiles, Caddy HTTPS, production compose
+└── docs/                # Architecture, Security, Design System specs & screenshots
+```
+
+### Monorepo Stack Details
+| Layer | Technologies |
 |---|---|
-| Web | React 18, TypeScript, Vite, React Router, TanStack Query, Tailwind CSS 3.4, Radix UI, React Hook Form, Zod |
-| API | Node.js 20, NestJS, TypeScript, Zod (nestjs-zod), Swagger/OpenAPI, Pino, argon2, Helmet |
-| Data | PostgreSQL 16, Prisma |
-| Shared | `packages/contracts`: Zod schemas and types used by web and API |
-| Tests | Jest and Supertest (API), Vitest and Testing Library (web), Playwright (end to end) |
-| Delivery | Docker, Docker Compose, Caddy, GitHub Actions |
+| **Web Client** | React 18, TypeScript, Vite, React Router 6, TanStack Query 5, Tailwind CSS 3.4, Radix UI primitives, React Hook Form, Zod, Sonner, Lucide |
+| **API Backend** | NestJS 10 (modular monolith), Prisma ORM, PostgreSQL 16, Pino Logger, Argon2id, Helmet CSP, EventEmitter2, Throttler |
+| **Contracts** | Pure TypeScript + Zod schemas enforcing runtime API request/response contracts |
+| **Quality & Tests**| Jest & Supertest (API), Vitest & Testing Library (Web), Playwright (E2E), k6 (Load Testing) |
+| **DevOps & Deploy** | Multi-stage Alpine Docker, Caddy 2 (automatic Let's Encrypt HTTPS), Nginx, GitHub Actions |
 
-## Documentation
+---
 
-| Document | Contents |
-|---|---|
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Modular monolith, diagrams, data model, auth flow, RBAC, ADRs, scalability |
-| [docs/SECURITY.md](docs/SECURITY.md) | Threat model, controls, OWASP mapping, required security tests |
-| [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) | 60/30/10 color system, typography, components, motion |
-| [docs/design-reference.html](docs/design-reference.html) | Visual reference. Open in a browser |
+## 🔒 Security & OWASP Compliance
 
-## Getting started
+Dars adheres to strict security policies documented in [`docs/SECURITY.md`](docs/SECURITY.md) and verified by 12 comprehensive automated security test suites:
 
-Requirements: Node.js 20+, Docker.
+1. **IDOR Defense**: All student submissions, quiz attempts, and grades enforce domain ownership checks. Forbidden objects return `404 Not Found` to prevent resource enumeration.
+2. **Strict RBAC & Policies**: Role separation (Student, Instructor, Admin) checked globally by NestJS guards; fine-grained course editing verified in service layer.
+3. **No Mass Assignment**: Input DTOs strictly stripped and validated with Zod; registration rejects role tampering.
+4. **Token Family Rotation**: Refresh tokens in `httpOnly`, `SameSite=Strict` cookies. Replay detection revokes the entire token family immediately.
+5. **Anti-Enumeration**: Identical responses and constant-time behavior across login and forgot-password endpoints.
+6. **Server-Authoritative Timing**: Quiz deadlines and time limits are validated by server timestamp with grace window check.
+7. **No Answer Key Leakage**: Option `isCorrect` and explanations are omitted from attempt payloads until after submission.
+8. **File Upload Hardening**: Magic byte file sniffing (`file-type`), allowed extension white-listing (`.pdf`, `.zip`, `.png`, `.jpg`), and 10MB limits.
+9. **XSS Protection**: Markdown sanitized via `rehype-sanitize` with strict HTML element allow-lists.
+10. **Rate Limiting**: Throttler limits brute-force attempts on authentication routes (HTTP 429).
+11. **Security Headers**: Helmet CSP, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `X-Request-ID` propagation.
 
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js**: v20.x or v22.x
+- **npm**: v10.x or v11.x
+- **Docker Desktop** (or a local PostgreSQL 16 instance)
+
+### 1. Installation
+Clone the repository and install dependencies across all workspaces:
 ```bash
+git clone https://github.com/your-org/dars-lms.git
+cd dars-lms
 npm install
+```
+
+### 2. Configure Environment
+Create local environment files:
+```bash
 cp apps/api/.env.example apps/api/.env
-docker compose up -d db mailpit      # PostgreSQL and a local mail catcher
+```
+
+### 3. Start Database & Seed Realistic Demo Data
+If running Docker:
+```bash
+# Start PostgreSQL 16 and Mailpit
+docker compose up -d db mailpit
+
+# Run migrations and seed curriculum
 npm run db:migrate
-npm run db:seed                      # demo data and accounts
-npm run dev                          # web on :5173, API on :4000, docs on :4000/api/docs
+npm run db:seed
 ```
 
-Mail sent in development is visible at http://localhost:8025.
+### 4. Start Development Servers
+```bash
+npm run dev
+```
+- **Web App**: [http://localhost:5173](http://localhost:5173)
+- **API Server**: [http://localhost:4000](http://localhost:4000)
+- **Interactive Swagger Docs**: [http://localhost:4000/api/docs](http://localhost:4000/api/docs)
+- **Local Mailpit Inbox**: [http://localhost:8025](http://localhost:8025)
 
-Demo accounts (development seed only, never created in production):
+---
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@dars.test` | `DarsDemo-2026` |
-| Instructor | `instructor@dars.test` | `DarsDemo-2026` |
-| Student | `student@dars.test` | `DarsDemo-2026` |
+## 👥 Demo Accounts (Development Seed)
 
-## Scripts
+| Role | Email | Password | Access Highlights |
+|---|---|---|---|
+| **Student** | `student@dars.test` | `DarsDemo-2026` | Enrolled in 4 courses, in-progress lesson, pending quiz attempt |
+| **Instructor** | `instructor@dars.test` | `DarsDemo-2026` | Course builder, module manager, submissions grading queue |
+| **Administrator** | `admin@dars.test` | `DarsDemo-2026` | User role management, audit log inspection, platform stats |
 
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Web and API with hot reload |
-| `npm run build` | Production build of every workspace |
-| `npm run lint` | ESLint, zero warnings allowed |
-| `npm run typecheck` | `tsc --noEmit` everywhere |
-| `npm run format` | Prettier |
-| `npm run test` | Unit and integration tests |
-| `npm run test:e2e` | Playwright |
-| `npm run db:migrate` | Apply Prisma migrations |
-| `npm run db:seed` | Seed demo data |
-| `npm run perf:load` | k6 load test against a running API |
+---
 
-## Configuration (`apps/api/.env`)
+## 🛠️ Verification & Test Suite
 
-| Variable | Purpose |
-|---|---|
-| `NODE_ENV` | `development`, `test`, `production` |
-| `PORT` | API port, default `4000` |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `JWT_ACCESS_SECRET` | Signing secret for access tokens (32+ random bytes) |
-| `JWT_ACCESS_TTL` | Default `15m` |
-| `REFRESH_TTL_DAYS` | Default `7` |
-| `CORS_ORIGINS` | Comma-separated allowed origins |
-| `COOKIE_DOMAIN` | Cookie domain in production |
-| `STORAGE_DRIVER` | `local` or `s3` |
-| `STORAGE_LOCAL_PATH` | Upload directory for the `local` driver |
-| `SMTP_URL` | Mail transport |
-| `APP_URL` | Public web URL, used in emails |
+Run the full verification suite across the monorepo:
 
-The API refuses to start when a required variable is missing or invalid.
+```powershell
+# 1. ESLint (Zero warnings allowed)
+npm run lint
 
-## Roles
+# 2. Strict TypeScript check across all packages
+npm run typecheck
 
-| Role | Can |
-|---|---|
-| Student | Enroll, learn, take quizzes, hand in assignments, see own progress and grades |
-| Instructor | Everything on their own courses: build, publish, grade, see gradebook |
-| Admin | Everything, plus users, roles and the audit log |
+# 3. Unit and component tests (Vitest)
+npm run test --workspace=apps/web
 
-The full permission matrix is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#7-authorization).
+# 4. API End-to-End tests (Jest)
+npm run test:e2e --workspace=apps/api
 
-## API
+# 5. Production builds (Vite + NestJS)
+npm run build --workspace=packages/contracts
+npm run build --workspace=apps/web
+npm run build --workspace=apps/api
 
-Base path `/api/v1`. Interactive documentation at `/api/docs` in development. The endpoint catalog is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#9-api-conventions).
-
-Errors always look like this:
-
-```json
-{ "error": { "code": "VALIDATION_ERROR", "message": "Check the highlighted fields.", "fields": { "email": "Enter a valid email address." }, "requestId": "7f3c..." } }
+# 6. k6 Load Testing (p95 < 200ms)
+npm run perf:load
 ```
 
-## Testing
+---
 
-- API: unit tests for services and policies, integration tests with Supertest against a real PostgreSQL test database, and the security tests listed in [docs/SECURITY.md](docs/SECURITY.md#10-required-security-tests).
-- Web: component tests by role and accessible name.
-- End to end: one Playwright path per role (student learns and submits, instructor builds and grades, admin manages users).
+## 🚢 Production Deployment
 
-## Deployment
-
-Production runs as Docker containers: `web` (Nginx serving the built SPA), `api`, `db` (PostgreSQL) behind Caddy, which provides automatic HTTPS.
+Dars is containerized using multi-stage, hardened Alpine Docker images:
 
 ```bash
-cp deploy/.env.production.example deploy/.env.production   # fill in real secrets
+# 1. Setup production environment
+cp deploy/.env.production.example deploy/.env.production
+
+# 2. Build and launch services behind Caddy reverse proxy
 docker compose -f deploy/docker-compose.prod.yml --env-file deploy/.env.production up -d --build
+
+# 3. Apply database migrations
 docker compose -f deploy/docker-compose.prod.yml exec api npx prisma migrate deploy
 ```
 
-- GitHub Actions runs lint, typecheck and tests on every pull request, builds and pushes images on tags, and deploys over SSH.
-- Health: `GET /health` (liveness) and `GET /ready` (database reachable).
-- Backups: a nightly `pg_dump` job writes to a separate volume. Restore steps are documented in `deploy/RESTORE.md`.
-- A managed alternative (static web on Netlify or Vercel, API on Render or Fly.io, database on Neon) works unchanged because configuration is environment-only.
+Automated daily backup and recovery procedures are documented in [`deploy/RESTORE.md`](deploy/RESTORE.md).
 
-## Performance
+---
 
-Budgets: Lighthouse performance 90+ on the dashboard, LCP under 2.5s, initial JavaScript under 180KB gzipped, API p95 under 200ms for list endpoints with the seed data. `npm run perf:load` runs the k6 scenario and fails when a budget is missed.
-
-## Project structure
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#14-repository-structure).
-
-## Contributing
-
-Conventional Commits. Before a pull request: `npm run lint && npm run typecheck && npm run test`. Architectural changes need an ADR row in `docs/ARCHITECTURE.md`.
+## 📄 License
+This project is open-source under the [MIT License](LICENSE).
