@@ -10,6 +10,17 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { validateEnv } from './config/env';
 import { AppLoggerModule } from './infra/logger/logger.module';
 import { OpsModule } from './modules/ops/ops.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AuditModule } from './modules/audit/audit.module';
+import { UsersModule } from './modules/users/users.module';
+import { CoursesModule } from './modules/courses/courses.module';
+import { ContentModule } from './modules/content/content.module';
+import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
+import { AssessmentsModule } from './modules/assessments/assessments.module';
+import { GradingModule } from './modules/grading/grading.module';
+import { ProgressModule } from './modules/progress/progress.module';
+import { FilesModule } from './modules/files/files.module';
+import { AdminModule } from './modules/admin/admin.module';
 import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
@@ -36,6 +47,17 @@ const env = validateEnv(process.env);
     }),
     AppLoggerModule,
     OpsModule,
+    AuditModule,
+    AuthModule,
+    UsersModule,
+    CoursesModule,
+    ContentModule,
+    EnrollmentsModule,
+    AssessmentsModule,
+    GradingModule,
+    ProgressModule,
+    FilesModule,
+    AdminModule,
   ],
   providers: [
     StorageService,
