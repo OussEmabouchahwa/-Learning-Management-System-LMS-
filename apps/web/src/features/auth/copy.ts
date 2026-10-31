@@ -1,0 +1,42 @@
+export const authCopy = {
+  login: {
+    title: 'Sign in',
+    emailLabel: 'Email address',
+    passwordLabel: 'Password',
+    submit: 'Sign in',
+    forgotPassword: 'Forgot password?',
+    noAccount: 'No account?',
+    register: 'Register',
+    error: {
+      invalid: 'Invalid email or password',
+      generic: 'Something went wrong. Try again.',
+    },
+  },
+  register: {
+    title: 'Create account',
+    nameLabel: 'Full name',
+    emailLabel: 'Email address',
+    passwordLabel: 'Password',
+    passwordHint: 'At least 8 characters',
+    submit: 'Create account',
+    hasAccount: 'Already have an account?',
+    signIn: 'Sign in',
+  },
+  forgot: {
+    title: 'Reset password',
+    description: "Enter your email address and we'll send you a link to reset your password.",
+    emailLabel: 'Email address',
+    submit: 'Send reset link',
+    sent: 'Check your email',
+    sentDescription: 'If an account exists for this email, a reset link is on its way.',
+    backToLogin: 'Back to sign in',
+  },
+  reset: {
+    title: 'Set new password',
+    passwordLabel: 'New password',
+    passwordHint: 'At least 8 characters',
+    submit: 'Set password',
+    success: 'Password updated. Sign in with your new password.',
+    backToLogin: 'Back to sign in',
+  },
+} as const;

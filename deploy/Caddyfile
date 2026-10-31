@@ -1,0 +1,29 @@
+{
+    email {$ACME_EMAIL:admin@dars.lms}
+}
+
+{$DOMAIN:localhost} {
+    # API endpoints and docs
+    handle /api/* {
+        reverse_proxy api:4000
+    }
+
+    # SPA and static assets
+    handle {
+        reverse_proxy web:80
+    }
+
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+
+    log {
+        output stdout
+        format json
+    }
+}
