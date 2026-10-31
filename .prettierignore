@@ -1,0 +1,11 @@
+dist/
+node_modules/
+coverage/
+.next/
+build/
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.ico
+package-lock.json

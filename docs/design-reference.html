@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dars design reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  /* 60% chalk: ground and surfaces */
+  --chalk-0:#fff; --chalk-50:#f4f6f5; --chalk-100:#ebefed;
+  /* 30% board: structure, sidebar, panels, text */
+  --board-100:#e3ebea; --board-200:#cfdcda; --board-300:#afc2c0; --board-400:#768d8c; --board-500:#587473; --board-700:#2e4a4d; --board-900:#0f2a2e;
+  /* 10% pencil: action, progress, current position */
+  --pencil-100:#fff1cc; --pencil-300:#ffd166; --pencil-500:#f2a100; --pencil-700:#955700;
+  /* status only */
+  --leaf-100:#e1f2e8; --leaf-600:#1f7a4d; --redpen-100:#fce9e7; --redpen-600:#b42318;
+  --line:rgb(15 42 46 / .12); --line-strong:rgb(15 42 46 / .22);
+  --serif:"IBM Plex Serif",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --r-sm:4px; --r-md:8px; --r-lg:12px;
+  --ease:cubic-bezier(.23,1,.32,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--chalk-50);color:var(--board-900);font:400 1rem/1.5 var(--sans);-webkit-font-smoothing:antialiased;caret-color:var(--pencil-500);accent-color:var(--pencil-500)}
+::selection{background:var(--pencil-300);color:var(--board-900)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;text-wrap:balance}
+.num{font-variant-numeric:tabular-nums}
+.icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:2px solid var(--board-900);outline-offset:2px}
+
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+.side{background:var(--board-100);border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 8px;font:600 1.4375rem/1 var(--serif)}
+.brand svg{width:22px;height:26px}
+nav{display:grid;gap:2px}
+nav a{display:flex;align-items:center;gap:12px;padding:0 10px;height:40px;border-radius:var(--r-md);color:var(--board-700);text-decoration:none;font-size:.9375rem;transition:background-color .15s,color .15s}
+nav a:hover{background:rgb(255 255 255 / .55);color:var(--board-900)}
+nav a[aria-current]{background:var(--chalk-0);color:var(--board-900);font-weight:600}
+.who{margin-top:auto;display:flex;align-items:center;gap:10px;padding:8px;font-size:.875rem;color:var(--board-700)}
+.av{width:32px;height:32px;border-radius:50%;background:var(--chalk-0);display:grid;place-items:center;font:600 .8125rem var(--sans);color:var(--board-900)}
+
+main{min-width:0;padding:32px clamp(20px,4vw,48px) 64px;max-width:1160px;width:100%}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:24px}
+.top h1{font-size:1.75rem;line-height:1.2;letter-spacing:-.01em}
+.top p{margin:0;color:var(--board-700);font-size:.875rem}
+
+.panel{background:var(--chalk-0);border:1px solid var(--line);border-radius:var(--r-lg)}
+.resume{display:grid;grid-template-columns:1fr auto;gap:8px 32px;padding:24px 28px;align-items:end}
+.resume .meta{color:var(--board-700);font-size:.875rem}
+.resume h2{font-size:1.9375rem;line-height:1.15;letter-spacing:-.012em;margin:4px 0 2px}
+.resume .where{margin:0;color:var(--board-700)}
+.trail{grid-column:1 / -1;margin-top:18px}
+.trail .segs{display:flex;gap:3px}
+.trail i{flex:1;height:10px;border-radius:var(--r-sm);background:var(--board-200)}
+.trail i.done{background:var(--board-700)}
+.trail i.now{background:var(--pencil-500);outline:2px solid var(--pencil-100);outline-offset:0}
+.trail .cap{display:flex;justify-content:space-between;margin-top:8px;font-size:.875rem;color:var(--board-700)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border:0;border-radius:var(--r-md);background:var(--pencil-500);color:var(--board-900);font:600 .9375rem var(--sans);cursor:pointer;transition:background-color .15s,transform .12s var(--ease)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--pencil-300)}}
+.btn:active{transform:scale(.97)}
+
+.cols{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;margin-top:24px}
+.sec{padding:20px 24px 8px}
+.sec h3{font-size:1.1875rem;margin-bottom:6px}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:14px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row b{font-weight:600}
+.row small{color:var(--board-700);font-size:.875rem}
+.tag{align-self:center;justify-self:end;padding:2px 10px;border-radius:99px;font-size:.8125rem;font-weight:500;background:var(--board-100);color:var(--board-700)}
+.tag.soon{background:var(--pencil-100);color:var(--pencil-700)}
+.tag.ok{background:var(--leaf-100);color:var(--leaf-600)}
+.mini{display:flex;align-items:center;gap:10px;justify-self:end;font-size:.875rem;color:var(--board-700)}
+.mini span.b{width:72px;height:6px;border-radius:99px;background:var(--board-200);overflow:hidden}
+.mini span.b i{display:block;height:100%;background:var(--board-700)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:24px}
+.stats div{padding:18px 24px;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:0}
+.stats small{display:block;color:var(--board-700);font-size:.875rem}
+.stats b{font:600 1.75rem/1.2 var(--serif)}
+.stats em{font-style:normal;font-size:.875rem;color:var(--board-700)}
+
+/* reference section */
+.ref{margin-top:56px;padding-top:32px;border-top:1px solid var(--line-strong)}
+.ref h2{font-size:1.4375rem;margin-bottom:6px}
+.ref>p{margin:0 0 20px;color:var(--board-700);max-width:68ch}
+.ratio{display:flex;height:56px;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line)}
+.ratio div{display:flex;align-items:center;padding:0 14px;font-size:.875rem;font-weight:600}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:16px}
+.sw div{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;font-size:.8125rem}
+.sw i{display:block;height:40px}
+.sw span{display:block;padding:6px 8px;background:var(--chalk-0)}
+.sw code{font-family:var(--mono);font-size:.75rem;color:var(--board-700)}
+.scale{display:grid;gap:2px;margin-top:20px}
+.scale p{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;border-top:1px solid var(--line);padding:8px 0}
+.scale small{flex:0 0 150px;color:var(--board-700);font-family:var(--mono);font-size:.75rem}
+
+@media (max-width:980px){.cols{grid-template-columns:1fr}}
+@media (max-width:820px){
+  .app{grid-template-columns:1fr}
+  .side{flex-direction:row;align-items:center;gap:12px;padding:10px 12px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
+  nav{display:flex}.who{display:none}.brand{flex:none}
+  nav a{flex:none;padding:0 12px}
+  .resume{grid-template-columns:1fr;padding:20px}
+  .resume .btn{justify-content:center}
+  .stats{grid-template-columns:1fr}.stats div{border-left:0;border-top:1px solid var(--line)}.stats div:first-child{border-top:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></symbol>
+  <symbol id="i-grade" viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <svg viewBox="0 0 22 26" aria-hidden="true"><path d="M2 1h18v24l-9-6-9 6z" fill="#f2a100"/></svg>Dars
+    </div>
+    <nav aria-label="Main">
+      <a href="#" aria-current="page"><svg class="icon"><use href="#i-home"/></svg>Dashboard</a>
+      <a href="#"><svg class="icon"><use href="#i-book"/></svg>My courses</a>
+      <a href="#"><svg class="icon"><use href="#i-pen"/></svg>Assignments</a>
+      <a href="#"><svg class="icon"><use href="#i-quiz"/></svg>Quizzes</a>
+      <a href="#"><svg class="icon"><use href="#i-grade"/></svg>Grades</a>
+    </nav>
+    <div class="who"><span class="av">AB</span>Amira Ben Salah</div>
+  </aside>
+
+  <main>
+    <div class="top"><h1>This week</h1><p>Saturday 31 October</p></div>
+
+    <section class="panel resume" aria-label="Continue learning">
+      <div>
+        <span class="meta">Databases and SQL, Dr. Jlassi</span>
+        <h2>Joins in practice</h2>
+        <p class="where">Module 3, lesson 4. About 12 minutes.</p>
+      </div>
+      <button class="btn" type="button"><svg class="icon"><use href="#i-play"/></svg>Resume lesson</button>
+      <div class="trail">
+        <div class="segs" role="img" aria-label="14 of 24 lessons completed, lesson 15 in progress">
+          <i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="cap num"><span>14 of 24 lessons completed</span><span>Quiz 3 unlocks after lesson 17</span></div>
+      </div>
+    </section>
+
+    <section class="panel stats" aria-label="Summary">
+      <div><small>Average grade</small><b class="num">86.4</b> <em>out of 100</em></div>
+      <div><small>Submitted</small><b class="num">12</b> <em>of 14 assignments</em></div>
+      <div><small>Awaiting feedback</small><b class="num">2</b> <em>oldest sent 3 days ago</em></div>
+    </section>
+
+    <div class="cols">
+      <section class="panel sec" aria-labelledby="due">
+        <h3 id="due">Due soon</h3>
+        <div class="row"><div><b>SQL joins worksheet</b><br><small>Assignment, Databases and SQL, Mon 2 Nov, 23:59</small></div><span class="tag soon">In 2 days</span></div>
+        <div class="row"><div><b>React state and effects</b><br><small>Quiz, Web Development, Wed 4 Nov, 18:00. 20 minutes</small></div><span class="tag">Wed</span></div>
+        <div class="row"><div><b>Big-O problem set</b><br><small>Assignment, Algorithms, Fri 6 Nov, 12:00</small></div><span class="tag">Fri</span></div>
+      </section>
+
+      <section class="panel sec" aria-labelledby="courses">
+        <h3 id="courses">My courses</h3>
+        <div class="row"><div><b>Databases and SQL</b><br><small>Next: Joins in practice</small></div><div class="mini num"><span class="b"><i style="width:58%"></i></span>58%</div></div>
+        <div class="row"><div><b>Web Development with React</b><br><small>Next: Controlled forms</small></div><div class="mini num"><span class="b"><i style="width:31%"></i></span>31%</div></div>
+        <div class="row"><div><b>Algorithms and Data Structures</b><br><small>Next: Recursion</small></div><div class="mini num"><span class="b"><i style="width:12%"></i></span>12%</div></div>
+        <div class="row"><div><b>Technical English</b><br><small>Completed final quiz</small></div><span class="tag ok">Passed</span></div>
+      </section>
+    </div>
+
+    <section class="ref" aria-labelledby="ref-h">
+      <h2 id="ref-h">Reference: color and type</h2>
+      <p>Chalk is 60% of the screen (ground and surfaces). Board is 30% (sidebar, panels, text, rules). Pencil is 10% and appears only on the main action, the current lesson and progress. Status colors sit outside the ratio and appear on status marks only.</p>
+      <div class="ratio" aria-hidden="true">
+        <div style="flex:60;background:var(--chalk-50);color:var(--board-900)">60% Chalk</div>
+        <div style="flex:30;background:var(--board-100);color:var(--board-900);border-left:1px solid var(--line)">30% Board</div>
+        <div style="flex:10;background:var(--pencil-500);color:var(--board-900)">10%</div>
+      </div>
+      <div class="sw">
+        <div><i style="background:#f4f6f5"></i><span>chalk-50<br><code>#F4F6F5</code></span></div>
+        <div><i style="background:#fff"></i><span>chalk-0<br><code>#FFFFFF</code></span></div>
+        <div><i style="background:#e3ebea"></i><span>board-100<br><code>#E3EBEA</code></span></div>
+        <div><i style="background:#cfdcda"></i><span>board-200<br><code>#CFDCDA</code></span></div>
+        <div><i style="background:#768d8c"></i><span>board-400<br><code>#768D8C</code></span></div>
+        <div><i style="background:#2e4a4d"></i><span>board-700<br><code>#2E4A4D</code></span></div>
+        <div><i style="background:#0f2a2e"></i><span>board-900<br><code>#0F2A2E</code></span></div>
+        <div><i style="background:#f2a100"></i><span>pencil-500<br><code>#F2A100</code></span></div>
+        <div><i style="background:#955700"></i><span>pencil-700<br><code>#955700</code></span></div>
+        <div><i style="background:#1f7a4d"></i><span>leaf-600<br><code>#1F7A4D</code></span></div>
+        <div><i style="background:#b42318"></i><span>redpen-600<br><code>#B42318</code></span></div>
+      </div>
+      <div class="scale">
+        <p><small>Display 40 / Serif 600</small><span style="font:600 2.5rem/1.1 var(--serif)">Algorithms</span></p>
+        <p><small>H1 28 / Serif 600</small><span style="font:600 1.75rem/1.2 var(--serif)">This week</span></p>
+        <p><small>H2 23 / Serif 600</small><span style="font:600 1.4375rem/1.25 var(--serif)">Joins in practice</span></p>
+        <p><small>H3 19 / Serif 600</small><span style="font:600 1.1875rem/1.3 var(--serif)">Due soon</span></p>
+        <p><small>Body 16 / Sans 400</small><span>Plan your week from deadlines, not from course order.</span></p>
+        <p><small>Small 14 / Sans 400</small><span style="font-size:.875rem">Assignment, Mon 2 Nov, 23:59</span></p>
+        <p><small>Code 14 / Mono 400</small><span style="font:400 .875rem var(--mono)">SELECT name FROM students;</span></p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

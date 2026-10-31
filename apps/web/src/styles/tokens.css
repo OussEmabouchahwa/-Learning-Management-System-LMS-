@@ -1,0 +1,58 @@
+:root {
+  --chalk-0: #ffffff;
+  --chalk-50: #f4f6f5;
+  --chalk-100: #ebefed;
+  --board-100: #e3ebea;
+  --board-200: #cfdcda;
+  --board-300: #afc2c0;
+  --board-400: #768d8c;
+  --board-500: #587473;
+  --board-700: #2e4a4d;
+  --board-900: #0f2a2e;
+  --pencil-100: #fff1cc;
+  --pencil-300: #ffd166;
+  --pencil-500: #f2a100;
+  --pencil-700: #955700;
+  --leaf-100: #e1f2e8;
+  --leaf-600: #1f7a4d;
+  --redpen-100: #fce9e7;
+  --redpen-600: #b42318;
+
+  --line: rgb(15 42 46 / 0.12);
+  --line-strong: rgb(15 42 46 / 0.22);
+  --shadow-float: 0 8px 24px rgb(15 42 46 / 0.14), 0 0 0 1px rgb(15 42 46 / 0.08);
+
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-press: 120ms;
+  --dur-base: 180ms;
+  --dur-panel: 240ms;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-panel: 0.01ms;
+  }
+}
+
+::selection {
+  background: var(--pencil-300);
+  color: var(--board-900);
+}
+
+body {
+  caret-color: var(--pencil-500);
+  accent-color: var(--pencil-500);
+}
